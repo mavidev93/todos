@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {updateTodo,deleteTodo} from "../../api/todosApi";
 import TodoForm from "./TodoForm";
+import {LoadingSpinner} from "../../lib";
 
 function TodoList() {
     const {todosList, status, error} = useAppSelector(state => state.todos)
@@ -18,11 +19,20 @@ function TodoList() {
     }, [])
 
 
+    if(status==='failed'){
+
+        return <div className={'text-red-600'}>{error}</div>
+    }
+    if(status==='loading'){
+        <LoadingSpinner/>
+    }
+
     return <div className={'mt-8 shadow-md p-3'}>
         <h3 className={'text-lg '}> لیست تسک ها</h3>
-        <ul className={'flex flex-col gap-5 mt-4'}>
+        {todosList.length >0?   <ul className={'flex flex-col gap-5 mt-4'}>
             {todosList?.map((todo) =><SingleTodo todo={todo}/>  )}
-        </ul>
+        </ul>:<p>لیست تسک ها خالی است.</p>}
+
     </div>
 }
 

@@ -17,7 +17,6 @@ function AddTodo() {
             // refetch data from server
             dispatch(getTodosThunk())
             // NOTICE a success toast is a good idea here
-            toggleForm()
         } catch (e) {
             console.log(e)
 
