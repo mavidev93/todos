@@ -2,6 +2,7 @@ import React from 'react';
 import { Counter } from './redux/features/counter/Counter';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
+import Todos from "./components/Todos/Todos";
 
 function App() {
   return (
@@ -10,6 +11,9 @@ function App() {
         {/*<Counter />*/}
       <Navbar/>
       </header>
+        <main>
+            <Todos/>
+        </main>
     </div>
   );
 }

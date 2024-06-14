@@ -4,11 +4,15 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
-    // fontFamily: {
-    //   display: ['Vazirmatn'],
-    // },
+    extend: {
+      colors: {
+        primaryColor: '#004a77ff',
+      },
+    },
+
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-rtl'),
+  ],
 }
 
