@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import {getTodos} from "../../../api/todosApi";
 
 
-type Todo = { id: string, title: string, description: string, isCompleted: boolean }
+export type Todo = { id: string, title: string, description: string, isCompleted: boolean }
 
 // Define the initial state type
 interface TodosState {
@@ -29,18 +29,6 @@ const todosSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        addTodo: (state, action: PayloadAction<Todo>) => {
-            state.todosList.push(action.payload);
-        },
-        updateTodo: (state, action: PayloadAction<Todo>) => {
-            const index = state.todosList.findIndex(todo => todo.id === action.payload.id);
-            if (index !== -1) {
-                state.todosList[index] = action.payload;
-            }
-        },
-        deleteTodo: (state, action: PayloadAction<string>) => {
-            state.todosList = state.todosList.filter(todo => todo.id !== action.payload);
-        },
     },
     extraReducers: (builder) => {
         builder
@@ -59,6 +47,5 @@ const todosSlice = createSlice({
     },
 });
 
-export const { addTodo, deleteTodo,updateTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;
