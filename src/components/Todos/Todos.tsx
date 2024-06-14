@@ -1,7 +1,9 @@
 //Todos wrapper component
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus,faTrash,faEdit} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faTrash, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {useAppDispatch, useAppSelector} from "../../redux/app/hooks";
+import {getTodosThunk} from "../../redux/slices/todos/todosSlice";
 
 
 type SingleTodo = { id: string, title: string, description: string, isCompleted: boolean }
@@ -10,17 +12,17 @@ const dummyTodos: SingleTodo[] = [{
     title: "شستن ظرف ها",
     description: "ی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح",
     isCompleted: false
-},{
+}, {
     id: "fdjslfw",
     title: "خرید میوه",
     description: "ی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح",
     isCompleted: true
-},{
+}, {
     id: "dsfdazxffdasf",
     title: "بانک",
     description: "آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح  ی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح",
     isCompleted: false
-},]
+}]
 
 function Todos() {
     //TODO: showForm state will be add here and will show addButton or form
@@ -72,27 +74,38 @@ export default Todos
 
 
 function TodoList() {
-    //TODO: get todos from redux store
     //TODO: delete and edit(todo form) Modal
+    const {todosList, status, error} = useAppSelector(state => state.todos)
+    const dispatch = useAppDispatch()
+
+    React.useEffect(() => {
+        //Initially get todos when status is idle
+        if (status === 'idle') {
+            dispatch(getTodosThunk())
+        }
+    }, [])
+
+
     return <div className={'mt-8 shadow-md p-3'}>
         <h3 className={'text-lg '}> لیست تسک ها</h3>
-    <ul className={'flex flex-col gap-5 mt-4'}>
-        {dummyTodos.map((item) => <li className={ `flex shadow-md  p-2 gap-3 items-center ${item.isCompleted?"line-through ":''}`}>
-            <div>
-            <input type="checkbox" checked={item.isCompleted} className="form-checkbox text-blue-500 h-4 w-4"/>
-            </div>
-            <span className={'font-bold'}>{item.title}</span>
-            <span>{item.description}</span>
-            {/*Action icons*/}
-            <span className={'flex gap-2 mr-auto px-2'}>
+        <ul className={'flex flex-col gap-5 mt-4'}>
+            {todosList?.map((item) => <li
+                className={`flex shadow-md  p-2 gap-3 items-center ${item.isCompleted ? "line-through " : ''}`}>
+                <div>
+                    <input type="checkbox" checked={item.isCompleted} className="form-checkbox text-blue-500 h-4 w-4"/>
+                </div>
+                <span className={'font-bold'}>{item.title}</span>
+                <span>{item.description}</span>
+                {/*Action icons*/}
+                <span className={'flex gap-2 mr-auto px-2'}>
                 <button>
-                <FontAwesomeIcon className={'text-orange-600'}  icon={faEdit}/>
+                <FontAwesomeIcon className={'text-orange-600'} icon={faEdit}/>
 </button>
                 <button>
                 <FontAwesomeIcon className={'text-red-600'} icon={faTrash}/>
                     </button>
             </span>
-        </li>)}
-    </ul>
+            </li>)}
+        </ul>
     </div>
 }
