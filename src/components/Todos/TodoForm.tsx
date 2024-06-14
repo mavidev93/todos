@@ -19,7 +19,6 @@ function TodoForm({ formTitle,submitFunc, cancelFunc,initialTodo}:Props ) {
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
         e.preventDefault();
        await submitFunc(formData);
         setFormData({
