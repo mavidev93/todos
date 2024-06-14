@@ -12,7 +12,8 @@ export  const addTodo = async (todo:Todo)=>{
 }
 
 export const updateTodo = async (todo:Todo)=>{
-    const res = await  _http.put('/todos',todo)
+    const res = await  _http.put(`/todos/${todo.id}`,todo)
+    return res
 }
 
 
