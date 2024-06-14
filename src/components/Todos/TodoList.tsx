@@ -3,10 +3,10 @@ import React from "react";
 import {getTodosThunk, Todo} from "../../redux/slices/todos/todosSlice";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
-import {updateTodo} from "../../api/todosApi";
+import {updateTodo,deleteTodo} from "../../api/todosApi";
 import TodoForm from "./TodoForm";
+
 function TodoList() {
-    //TODO: delete and edit(todo form) Modal
     const {todosList, status, error} = useAppSelector(state => state.todos)
     const dispatch = useAppDispatch()
 
@@ -40,6 +40,16 @@ function SingleTodo({todo}:SingleTodoProp){
         dispatch(getTodosThunk())
     }
 
+    const handleDelete= async ()=>{
+        try {
+           await deleteTodo(id)
+            //refetch todos
+            dispatch(getTodosThunk())
+        }
+        catch (e){
+            console.log(e)
+        }
+    }
     const submitFunc = async (todo:Todo)=>{
 
         try {
@@ -66,7 +76,7 @@ function SingleTodo({todo}:SingleTodoProp){
                 <button onClick={toggleForm}>
                 <FontAwesomeIcon  className={'text-orange-600'} icon={faEdit}/>
                  </button>
-                <button>
+                <button  onClick={handleDelete}>
                 <FontAwesomeIcon className={'text-red-600'} icon={faTrash}/>
                     </button>
             </span>

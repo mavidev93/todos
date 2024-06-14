@@ -16,6 +16,9 @@ export const updateTodo = async (todo:Todo)=>{
     return res
 }
 
+export const deleteTodo = async (id:string)=>{
+    const res = await  _http.delete(`/todos/${id}`)
+}
 
 
 
