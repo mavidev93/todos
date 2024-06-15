@@ -20,11 +20,10 @@ function TodoList() {
 
 
     if(status==='failed'){
-
         return <div className={'text-red-600'}>{error}</div>
     }
     if(status==='loading'){
-        <LoadingSpinner/>
+     return   <LoadingSpinner/>
     }
 
     return <div className={'mt-8 shadow-md p-3'}>
